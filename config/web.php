@@ -1,7 +1,7 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-// $db = require __DIR__ . '/db.php';
+$db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
@@ -10,19 +10,23 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@data'   => '@app/data'
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '8N6DSjcqQXt0-DWBvIfVhBHp7L_bV9kY',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        // 'user' => [
-        //     'identityClass' => 'app\models\User',
-        //     'enableAutoLogin' => true,
-        // ],
+        'user' => [
+            'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
+        ],
         // 'errorHandler' => [
         //     'errorAction' => 'site/error',
         // ],
@@ -35,12 +39,14 @@ $config = [
                 ],
             ],
         ],
-        // 'db' => $db,
+        'db' => $db,
         
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'entry','pluralize'=>false],
             ],
         ],
     ],
