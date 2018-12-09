@@ -46,6 +46,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'GET playlist' => 'site/download',
+                'GET file/<id:\d+>' => 'file/view',
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'entry','pluralize'=>false],
             ],
         ],

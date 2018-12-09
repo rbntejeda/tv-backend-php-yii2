@@ -12,8 +12,13 @@ class EntryController extends ActiveController
         return $this->modelClass::find()->all();
     }
 
-    public function actionReload()
+    public function actionRefresh()
     {
-        return ["hola"];
+        return $this->modelClass::RefreshFile();
+    }
+
+    public function actionSync()
+    {
+        return $this->modelClass::SyncEntry();
     }
 }

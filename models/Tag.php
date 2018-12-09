@@ -9,6 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ *
+ * @property EntryTags[] $entryTags
+ * @property Entry[] $entries
  */
 class Tag extends \yii\db\ActiveRecord
 {
@@ -41,5 +44,21 @@ class Tag extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEntryTags()
+    {
+        return $this->hasMany(EntryTags::className(), ['tagId' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEntries()
+    {
+        return $this->hasMany(Entry::className(), ['id' => 'entryId'])->viaTable('entry_tags', ['tagId' => 'id']);
     }
 }
