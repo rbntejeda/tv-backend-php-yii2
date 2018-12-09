@@ -23,17 +23,11 @@ use Yii;
  */
 class Entry extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'entry';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -46,9 +40,6 @@ class Entry extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -65,19 +56,29 @@ class Entry extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getEntryTags()
     {
         return $this->hasMany(EntryTags::className(), ['entryId' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTags()
     {
         return $this->hasMany(EntryTags::className(), ['id' => 'tagId'])->viaTable('entry_tags', ['entryId' => 'id']);
+    }
+
+    public static function CurrentFile()
+    {
+        $alias = Yii::getAlias('@data/lista.m3u');
+        if(!file_exists($alias))
+        {
+            static::RefreshFile();
+        }
+        return file_get_contents($alias);
+    }
+
+    public static function RefreshFile()
+    {
+        $file = file_get_contents(Yii::$app->params['m3u']);
+        file_put_contents(Yii::getAlias('@data/lista.m3u'),$file);
     }
 }

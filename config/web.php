@@ -45,7 +45,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                
+                'GET playlist' => 'site/download',
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'entry','pluralize'=>false],
             ],
         ],
