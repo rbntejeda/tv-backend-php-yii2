@@ -6,7 +6,7 @@ use yii\rest\ActiveController;
 
 class PlaylistController extends ActiveController
 {
-    public $modelClass = 'app\models\Entry';
+    public $modelClass = 'app\models\Playlist';
 
     public function actionAll(){
         return $this->modelClass::find()->all();
