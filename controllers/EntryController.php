@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
@@ -22,9 +23,19 @@ class EntryController extends ActiveController
 
     public function actionSync()
     {
-        return $this->modelClass::SyncEntry();
+		$cantidad = $this->modelClass::SyncEntry();
+		if($cantidad === 0)
+		{
+			
+			Yii::$app->response->statusCode = 304;
+			return;
+		}
+		if($cantidad > 0)
+		{
+			Yii::$app->response->statusCode = 200;
+			return $cantidad;
+		}
     }
-
 
     public function actions()
     {

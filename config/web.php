@@ -44,11 +44,22 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => true,
             'rules' => [
                 // 'GET playlist' => 'site/download',
                 'GET file/<id:\d+>' => 'file/view',
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'entry','pluralize'=>false],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'playlist','pluralize'=>false],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'entry',
+                    'pluralize'=>false,
+                    "extraPatterns" => 
+                    [
+                        "GET all" => "all",
+                        "GET refresh" => "refresh",
+                        "GET sync" => "sync"
+                    ]
+                ],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'playlist','pluralize'=>false ],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'playlistentry','pluralize'=>false],
             ],
         ],
