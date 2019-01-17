@@ -56,7 +56,8 @@ $config = [
                     [
                         "GET all" => "all",
                         "GET refresh" => "refresh",
-                        "GET sync" => "sync"
+                        "GET sync" => "sync",
+                        "GET test" => "test",
                     ]
                 ],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'playlist','pluralize'=>false ],

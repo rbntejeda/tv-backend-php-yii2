@@ -143,51 +143,9 @@ class Entry extends \yii\db\ActiveRecord
         $alias = Yii::getAlias('@data/lista.m3u');
         if(!file_exists($alias))
         {
-            static::RefreshFile();
+            $file = file_get_contents(Yii::$app->params['m3u']);
+            file_put_contents(Yii::getAlias('@data/lista.m3u'),$file);
         }
         return file_get_contents($alias);
-    }
-
-    public static function RefreshFile()
-    {
-        $file = file_get_contents(Yii::$app->params['m3u']);
-        file_put_contents(Yii::getAlias('@data/lista.m3u'),$file);
-    }
-
-    public static function SyncEntry()
-    {
-        $m3uParser = new M3uParser();
-        $m3uParser->addDefaultTags();
-        $data = $m3uParser->parseFile(Yii::getAlias('@data/lista.m3u'));
-        $entries=[];
-        foreach ($data as $entry) {
-            $model = new Entry();
-            $model->path=$entry->getPath();
-            foreach ($entry->getExtTags() as  $extTag) {
-                switch ($extTag) {
-                    case $extTag instanceof \M3uParser\Tag\ExtInf: // If EXTINF tag
-
-                        $model->title=$extTag->getTitle();
-                        $model->duration=$extTag->getDuration();
-                        break;
-        
-                    // case $extTag instanceof \M3uParser\Tag\ExtTv: // If EXTTV tag
-                    //     echo "Xml : ".$extTag->getXmlTvId() . "\n";
-                    //     echo "IconUrl : ".$extTag->getIconUrl() . "\n";
-                    //     echo "Language : ".$extTag->getLanguage() . "\n";
-                    //     foreach ($extTag->getTags() as $tag) {
-                    //         echo "Tags : ".$tag . "\n";
-                    //     }
-                    //     break;
-                }
-            }
-            if($model->validate()){
-                $entries[]=$model->getAttributes(['path','title','duration']);
-            }
-        }
-        return Yii::$app->db
-            ->createCommand()
-            ->batchInsert('entry', ['path','title', 'duration'],$entries)
-            ->execute();
     }
 }
