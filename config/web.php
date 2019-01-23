@@ -60,7 +60,15 @@ $config = [
                         "GET test" => "test",
                     ]
                 ],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'playlist','pluralize'=>false ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'playlist',
+                    'pluralize'=>false,
+                    "extraPatterns" => 
+                    [
+                        "GET <id:\d+>/entry" => "entry",
+                    ]
+                ],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'playlistentry','pluralize'=>false],
             ],
         ],

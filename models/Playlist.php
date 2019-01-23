@@ -16,17 +16,11 @@ use Yii;
  */
 class Playlist extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'playlist';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -36,9 +30,6 @@ class Playlist extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -48,17 +39,18 @@ class Playlist extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    public function extraFields()
+    {
+        return [
+            'playlistEntries'
+        ];
+    }
+
     public function getPlaylistEntries()
     {
         return $this->hasMany(PlaylistEntry::className(), ['playlist_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getEntries()
     {
         return $this->hasMany(Entry::className(), ['id' => 'entry_id'])->viaTable('playlist_entry', ['playlist_id' => 'id']);

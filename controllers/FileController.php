@@ -21,8 +21,13 @@ class FileController extends Controller
     public function actionView($id)
     {
         $data = new M3uData();
-
-        $entries = Entry::find()->all();
+        $query = Entry::find();
+        if(!empty($id))
+        {
+            $query->joinWith('playlistEntry',false);
+            $query->andWhere(['playlist_entry.playlist_id'=>$id]);
+        }
+        $entries = $query->all();
 
         // $data->setAttribute('test-name', 'test-value');
         foreach($entries as $entry)

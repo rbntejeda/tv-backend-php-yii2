@@ -90,7 +90,7 @@ class Entry extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPlaylistEntries()
+    public function getPlaylistEntry()
     {
         return $this->hasMany(PlaylistEntry::className(), ['entry_id' => 'id']);
     }
