@@ -59,6 +59,6 @@ class Playlist extends \yii\db\ActiveRecord
 
     public function getCntEntry()
     {
-        $this->getEntries()->count();
+        return $this->getEntries()->count();
     }
 }
