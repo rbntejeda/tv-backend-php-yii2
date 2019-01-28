@@ -42,7 +42,8 @@ class Playlist extends \yii\db\ActiveRecord
     public function extraFields()
     {
         return [
-            'playlistEntries'
+            'playlistEntries',
+            'cntEntry'
         ];
     }
 
@@ -54,5 +55,10 @@ class Playlist extends \yii\db\ActiveRecord
     public function getEntries()
     {
         return $this->hasMany(Entry::className(), ['id' => 'entry_id'])->viaTable('playlist_entry', ['playlist_id' => 'id']);
+    }
+
+    public function getCntEntry()
+    {
+        $this->getEntries()->count();
     }
 }
