@@ -67,6 +67,7 @@ $config = [
                     "extraPatterns" => 
                     [
                         "GET <id:\d+>/entry" => "entry",
+                        "GET <id:\d+>/noentry" => "noentry",
                     ]
                 ],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'playlistentry','pluralize'=>false],
